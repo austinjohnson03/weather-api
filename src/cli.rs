@@ -1,49 +1,53 @@
 use clap::{Args, Parser, Subcommand};
 
 #[derive(Parser)]
-#[command(name = "geocli", about = "Look up location and weather data")]
-struct Cli {
+#[command(
+    name = "geocli",
+    about = "Look up location and weather data",
+    allow_negative_numbers = true
+)]
+pub struct Cli {
     #[command(subcommand)]
-    command: Commands,
+    pub command: Commands,
 }
 
 #[derive(Subcommand)]
-enum Commands {
+pub enum Commands {
     Location(InputArgs),
     Weather(InputArgs),
 }
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
-struct InputArgs {
+pub struct InputArgs {
     #[command(flatten)]
-    coords: Option<CoordInput>,
+    pub coords: Option<CoordInput>,
 
     #[command(flatten)]
-    place: Option<PlaceInput>,
+    pub place: Option<PlaceInput>,
 }
 
 #[derive(Debug, Args)]
-struct CoordInput {
+pub struct CoordInput {
     /// Latitiude
     #[arg(long, requires = "lon")]
-    lat: Option<f64>,
+    pub lat: Option<f64>,
 
     /// Longitude
     #[arg(long, requires = "lat")]
-    lon: Option<f64>,
+    pub lon: Option<f64>,
 }
 
 #[derive(Debug, Args)]
-struct PlaceInput {
+pub struct PlaceInput {
     /// City name
     #[arg(long, requires = "country")]
-    city: Option<String>,
+    pub city: Option<String>,
 
     /// Country name or ISO 3166-1 A-2 Code
     #[arg(long, requires = "city")]
-    country: Option<String>,
+    pub country: Option<String>,
 
     /// State or region (optional)
-    state: Option<String>,
+    pub state: Option<String>,
 }
