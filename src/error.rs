@@ -21,6 +21,9 @@ pub enum ClientError {
     #[error("TLS Error: {0}")]
     TlsError(String),
 
+    #[error("Request failed: {0}")]
+    RequestFailed(#[from] reqwest_middleware::Error),
+
     #[error("Unexpected Error: {0}")]
     Unknown(String),
 }
